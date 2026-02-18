@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="../BookMyProperty.Application/BookMyProperty.Application.csproj" />
+  <Project Path="../BookMyProperty.Domain/BookMyProperty.Domain.csproj" />
+  <Project Path="../BookMyProperty.Infrastructure/BookMyProperty.Infrastructure.csproj" />
+  <Project Path="BookMyProperty.API.csproj" />
+</Solution>
