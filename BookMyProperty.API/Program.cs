@@ -1,9 +1,10 @@
+using AutoMapper;
+using BookMyProperty.API.Middleware;
+using BookMyProperty.Application.Mappings;
+using BookMyProperty.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using BookMyProperty.Infrastructure;
 using System.Text;
-using AutoMapper;
-using BookMyProperty.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
 // Get configuration
 var configuration = builder.Configuration;
@@ -68,11 +70,28 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// Add Global Exception Middleware
+app.UseMiddleware<GlobalExceptionMiddleware>();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
+
+app.UseHttpsRedirection();
+
+app.UseCors("AllowAll");
+
+app.UseAuthentication();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
 
 app.UseHttpsRedirection();
 

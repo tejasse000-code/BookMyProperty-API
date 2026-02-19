@@ -1,6 +1,7 @@
 using System.Net;
 using System.Text.Json;
 using BookMyProperty.Application.Exceptions;
+using BookMyProperty.API.Models;
 
 namespace BookMyProperty.API.Middleware;
 
@@ -48,7 +49,7 @@ public class GlobalExceptionMiddleware
                 response.Message = validationEx.Message;
                 break;
 
-            case UnauthorizedException unauthorizedEx:
+            case UnauthorizedAccessException unauthorizedEx:
                 context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                 response.Success = false;
                 response.Message = unauthorizedEx.Message;
@@ -65,9 +66,3 @@ public class GlobalExceptionMiddleware
     }
 }
 
-public class ApiResponse<T>
-{
-    public bool Success { get; set; }
-    public string Message { get; set; } = string.Empty;
-    public T? Data { get; set; }
-}

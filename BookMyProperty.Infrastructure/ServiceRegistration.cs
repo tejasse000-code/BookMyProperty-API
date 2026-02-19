@@ -32,6 +32,13 @@ public static class ServiceRegistration
         services.AddScoped(typeof(Repository<>));
         services.AddScoped<IPropertyRepository, PropertyRepository>();
         services.AddScoped<IPropertyQueryRepository, PropertyRepository>();
+        services.AddScoped<ILocationRepository, LocationRepository>();
+        services.AddScoped<IAmenityRepository, AmenityRepository>();
+        services.AddScoped<IPropertyTypeRepository, PropertyTypeRepository>();
+        services.AddScoped<IContactInquiryRepository, ContactInquiryRepository>();
+        services.AddScoped<IWishlistRepository, WishlistRepository>();
+        services.AddScoped<IPropertyImageRepository, PropertyImageRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         // Add UnitOfWork
         services.AddScoped<IUnitOfWork, UnitOfWork>();
